@@ -1,36 +1,77 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   StyleSheet,
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native'
 
-export default class Header extends React.Component {
+import {
+  fetchUser,
+} from '../redux'
+
+import {
+  getUserState,
+} from '../selectors'
+
+
+export class Header extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.loadUserData = this.loadUserData.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadUserData()
+  }
+
+  loadUserData() {
+    this.props.fetchUser()
+  }
 
   render() {
-    return (
-      <View style={styles.headerBackground}>
-        <View style={styles.header}>
-          
-          <View style={styles.profilepicWrap}>
-            <Image style={styles.profilepic} source={{uri: 'https://d1m37qdzmw041i.cloudfront.net/photos/users/profile/thumbnail/318381-1505247817815.jpg'}} />
-          </View>
-          
-          <View style={styles.bioWrap}>
-            <Text style={styles.name}>pumpup</Text>
-            <Text style={styles.bio} numberOfLines={3}>
 
-              Motivation to become the best version of you!  
-              💙💪🌎\n\nIt's #HealthyHolidays ❄️🏋️\u200d♀️\n\n
-              Share your photos all month long to be featured!\n\n
-              👻 Snapchat @PumpUp\n\nGet your #TeamPumpUp gear ⬇            
-            </Text>
-          </View>
+    if(Object.keys(this.props.user).length > 0) {
 
+      const user = this.props.user
+      const profilePicObj = {
+        uri: user.profileThumbnail
+      }
+      // show data loaded from the server
+      return (
+        <View style={styles.headerBackground}>
+          <View style={styles.header}>
+
+            <View style={styles.profilepicWrap}>
+              <Image style={styles.profilepic} source={profilePicObj} />
+            </View>
+
+            <View style={styles.bioWrap}>
+              <Text style={styles.name}>{user.name}</Text>
+              <Text style={styles.bio} numberOfLines={3}>
+                {user.bio}
+              </Text>
+            </View>
+
+          </View>
         </View>
-      </View>
-    )
+        )
+
+    } else {
+
+      // show loading status
+      return (
+        <View style={styles.headerBackground}>
+          <Text>Loading ...
+          </Text>
+        </View>
+      )
+
+    }
+
   }
 }
 
@@ -77,4 +118,22 @@ const styles = StyleSheet.create({
   }
 
 })
+
+function mapStateToProps(state) {
+  return ({
+    user: getUserState(state) || {}
+  });
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUser: () => {
+      dispatch(fetchUser())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+
 

@@ -5,14 +5,27 @@ import {
   View
 } from 'react-native'
 
+import { connect, Provider } from 'react-redux'
+import { store } from './src/redux'
+
 import Header from './src/components/Header'
 
-export default class App extends React.Component {
+class AppInner extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <Header />
       </View>
+    )
+  }
+}
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
     )
   }
 }
@@ -25,4 +38,12 @@ const styles = StyleSheet.create({
   },
 })
 
-//AppRegistry.registerComponent('ProfilePage', () => ProfilePage)
+/**
+ * can split this into AppContainer.js
+ */
+const mapStateToProps = (state) => ({
+})
+
+const AppContainer = connect(
+  mapStateToProps,
+)(AppInner)

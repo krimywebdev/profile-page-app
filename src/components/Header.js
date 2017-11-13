@@ -16,12 +16,18 @@ import {
   getUserState,
 } from '../selectors'
 
+import {
+  getParsedBio,
+} from '../util'
+
+import ReadMore from '../common_components/ReadMore'
 
 export class Header extends React.Component {
 
   constructor(props) {
     super(props);
     this.loadUserData = this.loadUserData.bind(this);
+
   }
 
   componentDidMount() {
@@ -37,9 +43,12 @@ export class Header extends React.Component {
     if(Object.keys(this.props.user).length > 0) {
 
       const user = this.props.user
+      const bio = getParsedBio(this.props.user.bio)
       const profilePicObj = {
         uri: user.profileThumbnail
       }
+      console.log("bio = " + bio)
+      console.log("bioserver = " + this.props.user.bio)
       // show data loaded from the server
       return (
         <View style={styles.headerBackground}>
@@ -51,9 +60,11 @@ export class Header extends React.Component {
 
             <View style={styles.bioWrap}>
               <Text style={styles.name}>{user.name}</Text>
-              <Text style={styles.bio} numberOfLines={3}>
-                {user.bio}
-              </Text>
+              <ReadMore numberOfLines={3}>
+                <Text style={styles.bio} >
+                  {bio}
+                </Text>
+              </ReadMore>
             </View>
 
           </View>
@@ -111,6 +122,7 @@ const styles = StyleSheet.create({
   },
   bio: {
     color: '#484848',
+    zIndex: 1,
   },
   name: {
     fontSize: 16,

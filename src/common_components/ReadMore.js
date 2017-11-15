@@ -114,9 +114,7 @@ class ReadMore extends React.Component {
   render() {
     return (
       <View onLayout={this.onLayout} style={{ opacity: this.state.opacity }}>
-        <Text
-        style={this.props.textStyle}
-        numberOfLines={this.state.numberOfLines}
+        <Text numberOfLines={this.state.numberOfLines}
         >
           {this.props.children}
 
@@ -149,7 +147,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     bottom: 0,
-    opacity: 1,
     backgroundColor: 'white'
   },
 

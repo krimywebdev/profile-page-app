@@ -8,3 +8,17 @@ export const getUserState = createSelector(
   [ getUser ],
   (user) => user
 )
+
+const getUserFeedPhotos = (state) => state.userDetails.userFeedImages
+
+export const getUserFeedImagesState = createSelector(
+  [ getUserFeedPhotos ],
+  (userFeedImages) => userFeedImages
+)
+
+const getSelectedImageIndex = (state) => state.userDetails.selectedImageIndex
+
+export const getSelectedImageIndexState = createSelector(
+  [ getSelectedImageIndex ],
+  (selectedImageIndex) => selectedImageIndex
+)

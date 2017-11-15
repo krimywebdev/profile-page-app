@@ -9,12 +9,16 @@ import { connect, Provider } from 'react-redux'
 import { store } from './src/redux'
 
 import Header from './src/components/Header'
+import ImageSlider from './src/components/ImageSlider'
 
 class AppInner extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <Header />
+        <ImageSlider />
+        <View style={styles.gridStyle}>
+        </View>
       </View>
     )
   }
@@ -36,6 +40,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f8ff',
     alignItems: 'center',
   },
+  gridStyle: {
+    flex: 0.3
+  }
 })
 
 /**

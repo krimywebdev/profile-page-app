@@ -37,6 +37,36 @@ export const fetchUser = () => dispatch =>
     })
     .catch(() => dispatch(sendError()))
 
+
+export const showUserFeedImages = userFeedImages => ({
+  type: 'SUCCESS_FETCH_USER_FEED_IMAGES',
+  userFeedImages,
+})
+
+export const sendErrorFetchingUserFeedImages = () => ({ type: 'ERROR_FETCH_USER_FEED_IMAGES' })
+
+export const fetchUserFeedImages = () => dispatch =>
+  fetch('http://api.pumpup.com/1/functions/feed/profile/load-batch', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "isThumbnailsOnly": true,
+      "limit": 5,
+      "userId": 2707798,
+      "_method": "POST",
+      "_version": "5.0.5",
+      "_SessionToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
+    })
+  }).then(response => response.json())
+  .then(function(responseBody) {
+    console.log(responseBody)
+    dispatch(showUserFeedImages(responseBody.result.posts))
+  })
+  .catch(() => dispatch(sendErrorFetchingUserFeedImages()))
+
 /**
  * can be split into another file called reducers.js
  */
@@ -52,6 +82,16 @@ export const userDetails = (state = {}, action) => {
     case 'ERROR_FETCH_USER':
       new_state = JSON.parse(JSON.stringify(state))
       new_state.user = { error: true }
+      return new_state
+
+    case 'SUCCESS_FETCH_USER_FEED_IMAGES':
+      new_state = JSON.parse(JSON.stringify(state))
+      new_state.userFeedImages = action.userFeedImages
+      return new_state
+
+    case 'ERROR_FETCH_USER_FEED_IMAGES':
+      new_state = JSON.parse(JSON.stringify(state))
+      new_state.userFeedImages = { error: true }
       return new_state
 
     default:

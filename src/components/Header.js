@@ -24,16 +24,24 @@ import ReadMore from '../common_components/ReadMore'
 
 export class Header extends React.Component {
 
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     this.loadUserData = this.loadUserData.bind(this);
-
   }
 
+  /**
+   * Fetch the data after component has mounted
+   */
   componentDidMount() {
     this.loadUserData()
   }
 
+  /**
+   * Calls the redux function to fetch user details from the server
+   */
   loadUserData() {
     this.props.fetchUser()
   }
@@ -43,7 +51,7 @@ export class Header extends React.Component {
     if(Object.keys(this.props.user).length > 0) {
 
       const user = this.props.user
-      const bio = getParsedBio(this.props.user.bio)
+      const bio = getParsedBio(user.bio, user.website)
       const profilePicObj = {
         uri: user.profileThumbnail
       }
@@ -62,7 +70,7 @@ export class Header extends React.Component {
               <Text style={styles.name}>{user.name}</Text>
               <ReadMore numberOfLines={3}>
                 <Text style={styles.bio} >
-                  {bio}
+                {bio}
                 </Text>
               </ReadMore>
             </View>
@@ -88,10 +96,10 @@ export class Header extends React.Component {
 
 const styles = StyleSheet.create({
   headerBackground: {
+    flex:           0.2,
     paddingTop    : 50,
     paddingLeft   : 10,
     paddingRight  : 10,
-    flex          : 1,
     width         : null,
     alignSelf     : 'stretch',
     flexDirection : 'column',
@@ -99,7 +107,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
-    flex:            1,
     flexDirection:   'row',
   },
   profilepicWrap: {
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return ({
     user: getUserState(state) || {}
-  });
+  })
 }
 
 

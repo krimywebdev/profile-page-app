@@ -14,12 +14,10 @@ import {
 } from '../selectors'
 
 const deviceWidth = Dimensions.get('window').width
-const FIXED_BAR_WIDTH = 280
-const BAR_SPACE = 10
+const FIXED_BAR_WIDTH = 400
+const BAR_SPACE = 15
 
 export class ImageSlider extends Component {
-
-
 
   /**
    * Constructor
@@ -100,6 +98,7 @@ export class ImageSlider extends Component {
           <Image
           key={`image${i}`}
           source={{uri: image.thumbnail}}
+          resizeMode="contain"
           style={{ width: deviceWidth }}
           />
           )
@@ -117,7 +116,9 @@ export class ImageSlider extends Component {
           style={[
             styles.track,
             {
-              width: itemWidth,
+              width: itemWidth/1.5,
+              height: itemWidth/1.5,
+              borderRadius: itemWidth/1.5,
               marginLeft: i === 0 ? 0 : BAR_SPACE,
             },
           ]}
@@ -128,7 +129,10 @@ export class ImageSlider extends Component {
               style={[
                 styles.bar,
                 {
-                  width: itemWidth,
+                  width: itemWidth/1.5,
+                  height: itemWidth/1.5,
+                  borderRadius: itemWidth/1.5,
+                  border: 1,
                   transform: [
                     { translateX: scrollBarVal },
                   ],
@@ -141,8 +145,6 @@ export class ImageSlider extends Component {
         )
         barArray.push(thisBar)
       }) // end of foreach
-
-      console.log("barArray = " + barArray.length)
 
       return (
         <View

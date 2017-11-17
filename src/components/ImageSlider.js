@@ -51,30 +51,15 @@ export class ImageSlider extends Component {
 
   render() {
 
-    console.log("length:" + this.props.userFeedImages.length)
 
 
     let images
 
     if(this.props.userFeedImages.length > 0) {
       images = this.props.userFeedImages
-//      images = [
-//        'https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png',
-//        'https://s-media-cache-ak0.pinimg.com/originals/40/4f/83/404f83e93175630e77bc29b3fe727cbe.jpg',
-//        'https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg',
-//      ]
     } else {
-
-        images = []
-
-//      images = [
-//        'https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png',
-//        'https://s-media-cache-ak0.pinimg.com/originals/40/4f/83/404f83e93175630e77bc29b3fe727cbe.jpg',
-//        'https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg',
-//      ]
+      images = []
     }
-
-
 
     if(images.length <= 0) {
       return (
@@ -88,12 +73,10 @@ export class ImageSlider extends Component {
       const itemWidth = (FIXED_BAR_WIDTH / numItems) - ((numItems - 1) * BAR_SPACE)
       const animVal = new Animated.Value(0)
 
-      console.log("itemWidth = " + itemWidth )
 
       let imageArray = []
       let barArray = []
       images.forEach((image, i) => {
-        console.log(image, i)
         const thisImage = (
           <Image
           key={`image${i}`}
@@ -132,7 +115,6 @@ export class ImageSlider extends Component {
                   width: itemWidth/1.5,
                   height: itemWidth/1.5,
                   borderRadius: itemWidth/1.5,
-                  border: 1,
                   transform: [
                     { translateX: scrollBarVal },
                   ],
@@ -179,9 +161,12 @@ export class ImageSlider extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderColor: 'lightgray',
   },
 
   barContainer: {
@@ -197,7 +182,7 @@ const styles = StyleSheet.create({
   },
 
   bar: {
-    backgroundColor: 'darkgray',
+    backgroundColor: 'slategray',
     height: 20,
   },
 })

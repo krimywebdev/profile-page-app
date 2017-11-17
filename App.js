@@ -10,6 +10,7 @@ import { store } from './src/redux'
 
 import Header from './src/components/Header'
 import ImageSlider from './src/components/ImageSlider'
+import ImagesGrid from './src/components/ImagesGrid'
 
 class AppInner extends React.Component {
   render() {
@@ -17,8 +18,7 @@ class AppInner extends React.Component {
       <View style={styles.container}>
         <Header />
         <ImageSlider />
-        <View style={styles.gridStyle}>
-        </View>
+        <ImagesGrid />
       </View>
     )
   }
@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f8ff',
     alignItems: 'center',
   },
-  gridStyle: {
-    flex: 0.3
-  }
 })
 
 /**

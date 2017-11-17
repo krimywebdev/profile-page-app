@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Linking,
 } from 'react-native'
 
 import {
@@ -28,8 +29,9 @@ export class Header extends React.Component {
    * Constructor
    */
   constructor(props) {
-    super(props);
-    this.loadUserData = this.loadUserData.bind(this);
+    super(props)
+    this.loadUserData = this.loadUserData.bind(this)
+    this.onBioTextExpanded = this.onBioTextExpanded(this)
   }
 
   /**
@@ -46,17 +48,26 @@ export class Header extends React.Component {
     this.props.fetchUser()
   }
 
+  onBioTextExpanded() {
+
+  }
+
   render() {
 
     if(Object.keys(this.props.user).length > 0) {
 
       const user = this.props.user
-      const bio = getParsedBio(user.bio, user.website)
+
+      let pbio = getParsedBio(user.bio, user.website)
+
+      const bioJSX =
+        (<Text style={styles.bio}>
+          {getParsedBio(user.bio, user.website)}
+        </Text>)
+
       const profilePicObj = {
         uri: user.profileThumbnail
       }
-      console.log("bio = " + bio)
-      console.log("bioserver = " + this.props.user.bio)
       // show data loaded from the server
       return (
         <View style={styles.headerBackground}>
@@ -65,16 +76,14 @@ export class Header extends React.Component {
             <View style={styles.profilepicWrap}>
               <Image style={styles.profilepic} source={profilePicObj} />
             </View>
-
             <View style={styles.bioWrap}>
               <Text style={styles.name}>{user.name}</Text>
-              <ReadMore numberOfLines={3}>
-                <Text style={styles.bio} >
-                {bio}
-                </Text>
-              </ReadMore>
-            </View>
+              <ReadMore numberOfLines={3} afterExpand={this.onBioTextExpanded}>
 
+                {bioJSX}
+              </ReadMore>
+
+            </View>
           </View>
         </View>
         )
@@ -96,22 +105,25 @@ export class Header extends React.Component {
 
 const styles = StyleSheet.create({
   headerBackground: {
-    flex:           0.2,
-    paddingTop    : 50,
+    flex:           1.5,
+    paddingTop    : 20,
+    marginTop     : 20,
     paddingLeft   : 10,
     paddingRight  : 10,
+    marginBottom : 10,
     width         : null,
     alignSelf     : 'stretch',
     flexDirection : 'column',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
+    justifyContent: 'flex-start',
+    backgroundColor: '#f0f8ff',
+    borderBottomWidth: 1,
+    borderColor: 'lightgray',
+},
   header: {
     flexDirection:   'row',
   },
   profilepicWrap: {
     flex: 0.3,
-    height: 200,
     alignItems: 'center',
   },
   profilepic: {
@@ -123,7 +135,6 @@ const styles = StyleSheet.create({
   },
   bioWrap: {
     flex: 0.7,
-    height: 200,
     alignItems: 'flex-start',
     paddingLeft: 5,
   },

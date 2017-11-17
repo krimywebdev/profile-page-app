@@ -22,3 +22,10 @@ export const getSelectedImageIndexState = createSelector(
   [ getSelectedImageIndex ],
   (selectedImageIndex) => selectedImageIndex
 )
+
+const getPopularFeedImages = (state) => state.userDetails.popularFeedImages
+
+export const getPopularFeedImagesState = createSelector(
+  [ getPopularFeedImages ],
+  (popularFeedImages) => popularFeedImages
+)

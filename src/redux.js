@@ -4,7 +4,9 @@ import {
   createStore,
 } from 'redux'
 
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'
+
+import PumpupService from './api_services/services'
 
 /**
  * can be split into another file called actions.js
@@ -16,27 +18,38 @@ export const showUser = user => ({
 })
 
 export const sendError = () => ({ type: 'ERROR_FETCH_USER' })
+//
+//export const fetchUser = () => dispatch =>
+//  fetch('http://api.pumpup.com/1/classes/User/318381', {
+//    method: 'POST',
+//    headers: {
+//      'Accept': 'application/json',
+//      'Content-Type': 'application/json',
+//    },
+//    body: JSON.stringify({
+//      "_method": "GET",
+//      "_version": "5.0.5",
+//      "_SessionToken":
+//        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
+//    })
+//  }).then(response => response.json())
+//    .then(function(responseBody) {
+//      dispatch(showUser(responseBody))
+//    })
+//    .catch(() => dispatch(sendError()))
 
-export const fetchUser = () => dispatch =>
-  fetch('http://api.pumpup.com/1/classes/User/318381', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "_method": "GET",
-      "_version": "5.0.5",
-      "_SessionToken":
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
-    })
-  }).then(response => response.json())
-    .then(function(responseBody) {
-      console.log(responseBody)
-      dispatch(showUser(responseBody))
-    })
-    .catch(() => dispatch(sendError()))
 
+export const fetchUser = () => {
+  return async(dispatch, getState) => {
+    try {
+      const user = await PumpupService.getUserBio()
+      dispatch(showUser(user))
+    } catch (error) {
+      console.log("error" + error)
+      dispatch(sendError())
+    }
+  }
+}
 
 export const showUserFeedImages = userFeedImages => ({
   type: 'SUCCESS_FETCH_USER_FEED_IMAGES',
@@ -62,7 +75,6 @@ export const fetchUserFeedImages = () => dispatch =>
     })
   }).then(response => response.json())
   .then(function(responseBody) {
-    console.log(responseBody)
     dispatch(showUserFeedImages(responseBody.result.posts))
   })
   .catch(() => dispatch(sendErrorFetchingUserFeedImages()))
@@ -100,7 +112,18 @@ fetch('http://api.pumpup.com/1/functions/feed/popular/load-batch', {
 /**
  * can be split into another file called reducers.js
  */
-export const userDetails = (state = {}, action) => {
+
+const initialState = {
+  userDetails: {
+    user: {},
+
+    userFeedImages: [],
+
+    popularFeedImages: [],
+  }
+}
+
+export const userDetails = (state = initialState, action = {}) => {
   let new_state
   switch(action.type) {
 

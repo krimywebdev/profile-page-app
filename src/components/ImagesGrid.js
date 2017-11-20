@@ -47,8 +47,6 @@ export class ImagesGrid extends React.Component {
 
   render() {
 
-    console.log('length of popular feed photos: ' + this.props.popularFeedImages.length)
-
     let images
 
     if(this.props.popularFeedImages.length > 0) {

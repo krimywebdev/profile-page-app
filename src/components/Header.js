@@ -49,7 +49,7 @@ export class Header extends React.Component {
   }
 
   onBioTextExpanded() {
-
+    const c = 1
   }
 
   render() {

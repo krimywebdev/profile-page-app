@@ -51,8 +51,6 @@ export class ImageSlider extends Component {
 
   render() {
 
-
-
     let images
 
     if(this.props.userFeedImages.length > 0) {

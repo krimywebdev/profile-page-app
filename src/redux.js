@@ -18,26 +18,6 @@ export const showUser = user => ({
 })
 
 export const sendError = () => ({ type: 'ERROR_FETCH_USER' })
-//
-//export const fetchUser = () => dispatch =>
-//  fetch('http://api.pumpup.com/1/classes/User/318381', {
-//    method: 'POST',
-//    headers: {
-//      'Accept': 'application/json',
-//      'Content-Type': 'application/json',
-//    },
-//    body: JSON.stringify({
-//      "_method": "GET",
-//      "_version": "5.0.5",
-//      "_SessionToken":
-//        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
-//    })
-//  }).then(response => response.json())
-//    .then(function(responseBody) {
-//      dispatch(showUser(responseBody))
-//    })
-//    .catch(() => dispatch(sendError()))
-
 
 export const fetchUser = () => {
   return async(dispatch, getState) => {
@@ -58,27 +38,17 @@ export const showUserFeedImages = userFeedImages => ({
 
 export const sendErrorFetchingUserFeedImages = () => ({ type: 'ERROR_FETCH_USER_FEED_IMAGES' })
 
-export const fetchUserFeedImages = () => dispatch =>
-  fetch('http://api.pumpup.com/1/functions/feed/profile/load-batch', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      "isThumbnailsOnly": true,
-      "limit": 5,
-      "userId": 2707798,
-      "_method": "POST",
-      "_version": "5.0.5",
-      "_SessionToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
-    })
-  }).then(response => response.json())
-  .then(function(responseBody) {
-    dispatch(showUserFeedImages(responseBody.result.posts))
-  })
-  .catch(() => dispatch(sendErrorFetchingUserFeedImages()))
-
+export const fetchUserFeedImages = () => {
+  return async(dispatch, getState) => {
+    try {
+      const images = await PumpupService.getUserFeedImages()
+      dispatch(showUserFeedImages(images.result.posts))
+    } catch (error) {
+      console.log("error" + error)
+      dispatch(sendErrorFetchingUserFeedImages())
+    }
+  }
+}
 
 export const showPopularFeedImages = popularFeedImages => ({
   type: 'SUCCESS_FETCH_POPULAR_FEED_IMAGES',
@@ -87,27 +57,17 @@ export const showPopularFeedImages = popularFeedImages => ({
 
 export const sendErrorFetchingPopularFeedImages = () => ({ type: 'ERROR_FETCH_POPULAR_FEED_IMAGES' })
 
-export const fetchPopularFeedImages = () => dispatch =>
-fetch('http://api.pumpup.com/1/functions/feed/popular/load-batch', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    "isThumbnailsOnly": true,
-    "limit": 18,
-    "_method": "POST",
-    "_version": "5.0.5",
-    "_SessionToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOjI3MDc3OTgsImV4cCI6MTUzOTUzNTI1OTM2OH0.UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g"
-  })
-}).then(response => response.json())
-.then(function(responseBody) {
-  console.log(responseBody)
-  dispatch(showPopularFeedImages(responseBody.result.posts))
-})
-  .catch(() => dispatch(sendErrorFetchingPopularFeedImages()))
-
+export const fetchPopularFeedImages = () => {
+  return async(dispatch, getState) => {
+    try {
+      const images = await PumpupService.getPopularFeedImages()
+      dispatch(showPopularFeedImages(images.result.posts))
+    } catch (error) {
+      console.log("error" + error)
+      dispatch(sendErrorFetchingPopularFeedImages())
+    }
+  }
+}
 
 /**
  * can be split into another file called reducers.js

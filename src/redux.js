@@ -12,6 +12,9 @@ import PumpupService from './api_services/services'
  * can be split into another file called actions.js
  */
 
+
+
+
 export const showUser = user => ({
   type: 'SUCCESS_FETCH_USER',
   user,
@@ -25,7 +28,7 @@ export const fetchUser = () => {
       const user = await PumpupService.getUserBio()
       dispatch(showUser(user))
     } catch (error) {
-      console.log("error" + error)
+      console.log('error' + error)
       dispatch(sendError())
     }
   }
@@ -44,7 +47,7 @@ export const fetchUserFeedImages = () => {
       const images = await PumpupService.getUserFeedImages()
       dispatch(showUserFeedImages(images.result.posts))
     } catch (error) {
-      console.log("error" + error)
+      console.log('error' + error)
       dispatch(sendErrorFetchingUserFeedImages())
     }
   }
@@ -63,11 +66,13 @@ export const fetchPopularFeedImages = () => {
       const images = await PumpupService.getPopularFeedImages()
       dispatch(showPopularFeedImages(images.result.posts))
     } catch (error) {
-      console.log("error" + error)
+      console.log('error' + error)
       dispatch(sendErrorFetchingPopularFeedImages())
     }
   }
 }
+
+
 
 /**
  * can be split into another file called reducers.js
@@ -87,44 +92,47 @@ export const userDetails = (state = initialState, action = {}) => {
   let new_state
   switch(action.type) {
 
-    case 'SUCCESS_FETCH_USER':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.user = action.user
-      return new_state
+  case 'SUCCESS_FETCH_USER':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.user = action.user
+    return new_state
 
-    case 'ERROR_FETCH_USER':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.user = { error: true }
-      return new_state
+  case 'ERROR_FETCH_USER':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.user = { error: true }
+    return new_state
 
-    case 'SUCCESS_FETCH_USER_FEED_IMAGES':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.userFeedImages = action.userFeedImages
-      return new_state
+  case 'SUCCESS_FETCH_USER_FEED_IMAGES':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.userFeedImages = action.userFeedImages
+    return new_state
 
-    case 'ERROR_FETCH_USER_FEED_IMAGES':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.userFeedImages = { error: true }
-      return new_state
+  case 'ERROR_FETCH_USER_FEED_IMAGES':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.userFeedImages = { error: true }
+    return new_state
 
-    case 'SUCCESS_FETCH_POPULAR_FEED_IMAGES':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.popularFeedImages = action.popularFeedImages
-      return new_state
+  case 'SUCCESS_FETCH_POPULAR_FEED_IMAGES':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.popularFeedImages = action.popularFeedImages
+    return new_state
 
-    case 'ERROR_FETCH_POPULAR_FEED_IMAGES':
-      new_state = JSON.parse(JSON.stringify(state))
-      new_state.popularFeedImages = { error: true }
-      return new_state
+  case 'ERROR_FETCH_POPULAR_FEED_IMAGES':
+    new_state = JSON.parse(JSON.stringify(state))
+    new_state.popularFeedImages = { error: true }
+    return new_state
 
-    default:
-      return state
+  default:
+    return state
   }
 }
 
 export const reducers = combineReducers({
   userDetails,
 })
+
+
+
 
 /**
  * can be split into a separate file called store.js

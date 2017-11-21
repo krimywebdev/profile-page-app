@@ -96,7 +96,7 @@ describe('tests for reducers', function(){
 
     const popularFeedImages = userDetails(newState, {type: 'SUCCESS_FETCH_POPULAR_FEED_IMAGES'}).userDetails.popularFeedImages
 
-    popularFeedImages.should.be.instanceof(Array).and.have.lengthOf(3);
+    popularFeedImages.should.be.instanceof(Array).and.have.lengthOf(3)
 
   })
 

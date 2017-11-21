@@ -1,6 +1,6 @@
 import PumpupService from '../api_services/services'
 
-global.fetchMock = require('fetch-mock')
+const fetchMock = require('fetch-mock')
 
 describe('tests for utility methods', () => {
   beforeEach(() => {

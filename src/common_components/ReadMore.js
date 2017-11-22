@@ -4,13 +4,24 @@ import PropTypes from 'prop-types'
 
 class ReadMore extends React.Component {
   constructor(props) {
-    super(props);
-    this.resetData();
+    super(props)
+    this.resetData()
 
     this.state = {
       numberOfLines: null,
       opacity: 0,
     }
+
+    this.onLayout = this.onLayout.bind(this)
+    this.onPressMore = this.onPressMore.bind(this)
+    this.onPressLess = this.onPressLess.bind(this)
+    this.setOriginalHeight = this.setOriginalHeight.bind(this)
+    this.resetData = this.resetData.bind(this)
+    this.checkTextTruncated = this.checkTextTruncated.bind(this)
+    this.renderReadMore = this.renderReadMore.bind(this)
+    this.renderReadLess = this.renderReadLess.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
+
   }
 
   componentWillReceiveProps() {
@@ -30,12 +41,14 @@ class ReadMore extends React.Component {
     }
   }
 
-  onLayout = (event) => {
+  onLayout(event) {
     const {
       height,
-      } = event.nativeEvent.layout
+    } = event.nativeEvent.layout
 
-    if (height === 0 || this.state.opacity === 1) return false
+    if (height === 0 || this.state.opacity === 1) {
+      return false
+    }
 
     this.setOriginalHeight(height)
     this.checkTextTruncated(height)
@@ -47,60 +60,67 @@ class ReadMore extends React.Component {
     return null
   }
 
-  onPressMore = () => {
+  onPressMore() {
     this.setState({
       numberOfLines: null,
-    });
+    })
   }
 
-  onPressLess = () => {
+  onPressLess() {
     this.setState({
       numberOfLines: this.props.numberOfLines,
-    });
+    })
   }
 
-  setOriginalHeight = (height) => {
+  setOriginalHeight(height) {
     if (this.originalHeight === 0) {
       this.originalHeight = height
 
       this.setState({
         numberOfLines: this.props.numberOfLines,
-      });
+      })
     }
   }
 
-  resetData = () => {
+  resetData() {
     this.isTruncated = false
     this.originalHeight = 0
     this.shouldShowMore = false
     this.isInit = false
   }
 
-  checkTextTruncated = (height) => {
+  checkTextTruncated(height){
     if (height < this.originalHeight) {
       this.shouldShowMore = true
     }
   }
 
+  renderReadMore(){
 
-  renderReadMore = () => (
-    <View style={styles.readMoreWrapper}>
-      <Text style={[styles.readMore, styles.readText]} onPress={this.onPressMore}>
+    return (
+      <View style={styles.readMoreWrapper}>
+        <Text style={[styles.readMore, styles.readText]} onPress={this.onPressMore}>
         ...read more
-      </Text>
-    </View>
-  )
+        </Text>
+      </View>
+    )
 
-  renderReadLess = () => (
-    <Text style={styles.readText} onPress={this.onPressLess}>
+  }
+
+  renderReadLess(){
+
+    return (
+      <Text style={styles.readText} onPress={this.onPressLess}>
       ..read less
-    </Text>
-  )
+      </Text>
+    )
 
-  renderFooter = () => {
+  }
+
+  renderFooter() {
     const {
       numberOfLines,
-      } = this.state
+    } = this.state
 
     if (this.shouldShowMore === true) {
       if (numberOfLines > 0) {
@@ -112,6 +132,7 @@ class ReadMore extends React.Component {
   }
 
   render() {
+    /* eslint-disable react/prop-types */
     return (
       <View onLayout={this.onLayout} style={{ opacity: this.state.opacity }}>
         <Text numberOfLines={this.state.numberOfLines}>
@@ -122,8 +143,8 @@ class ReadMore extends React.Component {
 
       </View>
     )
+    /* eslint-enable react/prop-types */
   }
-
 }
 
 ReadMore.propTypes = {
@@ -160,4 +181,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default ReadMore;
+export default ReadMore

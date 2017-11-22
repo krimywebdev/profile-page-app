@@ -150,16 +150,15 @@ export class ImageSlider extends Component {
 }
 
 
+/**
+ * Define propTypes
+ */
 ImageSlider.propTypes = {
   fetchUserFeedImages : PropTypes.func.isRequired,
   userFeedImages      : PropTypes.array.isRequired,
 }
 
 
-
-/**
-* Define propTypes
-*/
 const styles = StyleSheet.create({
   container: {
     flex: 5,
@@ -191,8 +190,8 @@ const styles = StyleSheet.create({
 
 
 /**
-* Necessary for Redux
-*/
+ * Necessary for Redux
+ */
 function mapStateToProps(state) {
   return ({
     userFeedImages: getUserFeedImagesState(state) || [],

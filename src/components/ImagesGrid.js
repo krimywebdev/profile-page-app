@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import {
-  AppRegistry,
-  Stylesheet,
   View,
   StyleSheet,
   Image,
@@ -45,6 +44,9 @@ export class ImagesGrid extends React.Component {
     this.props.fetchPopularFeedImages()
   }
 
+  /**
+   * Render the component
+   */
   render() {
 
     let images
@@ -68,7 +70,7 @@ export class ImagesGrid extends React.Component {
         const thisImage = (
           <View key={`viewpopimages${i}`} style={styles.photoWrap}>
             <Image key={`popimage${i}`} style={styles.photo}
-            source={{uri: image.thumbnail}}
+              source={{uri: image.thumbnail}}
             />
           </View>
         )
@@ -79,15 +81,24 @@ export class ImagesGrid extends React.Component {
         <View style={styles.imagesGridContainer}>
           <ScrollView>
             <View style={styles.imagesGrid}>
-                {imageArray}
+              {imageArray}
             </View>
           </ScrollView>
         </View>
       )
     }
   }
-
 }
+
+/**
+ * Define propTypes
+ */
+ImagesGrid.propTypes = {
+  fetchPopularFeedImages : PropTypes.func.isRequired,
+  popularFeedImages      : PropTypes.array.isRequired,
+}
+
+
 
 const styles = StyleSheet.create({
   imagesGridContainer: {
@@ -129,4 +140,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImagesGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(ImagesGrid)

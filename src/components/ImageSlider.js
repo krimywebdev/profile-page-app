@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Animated, View, StyleSheet,
-         Image, Dimensions, ScrollView,
-         Text, TouchableOpacity } from 'react-native'
+  Image, Dimensions, ScrollView,
+  Text, TouchableOpacity } from 'react-native'
 
 import {
   fetchUserFeedImages,
@@ -23,8 +24,8 @@ export class ImageSlider extends Component {
    * Constructor
    */
   constructor(props) {
-    super(props);
-    this.loadUserFeedImages = this.loadUserFeedImages.bind(this);
+    super(props)
+    this.loadUserFeedImages = this.loadUserFeedImages.bind(this)
   }
 
   /**
@@ -39,7 +40,7 @@ export class ImageSlider extends Component {
    */
   onSliderDotTapped(i) {
 
-    this.refs.scrollView.scrollTo({x: i*deviceWidth, y: 0, animated: true});
+    this.scrollView.scrollTo({x: i*deviceWidth, y: 0, animated: true})
   }
 
   /**
@@ -49,6 +50,9 @@ export class ImageSlider extends Component {
     this.props.fetchUserFeedImages()
   }
 
+  /**
+   * Render function
+   */
   render() {
 
     let images
@@ -76,13 +80,12 @@ export class ImageSlider extends Component {
       let barArray = []
       images.forEach((image, i) => {
         const thisImage = (
-          <Image
-          key={`image${i}`}
-          source={{uri: image.thumbnail}}
-          resizeMode="contain"
-          style={{ width: deviceWidth }}
+          <Image key={`image${i}`}
+            source={{uri: image.thumbnail}}
+            resizeMode="contain"
+            style={{ width: deviceWidth }}
           />
-          )
+        )
         imageArray.push(thisImage)
 
         const scrollBarVal = animVal.interpolate({
@@ -92,71 +95,71 @@ export class ImageSlider extends Component {
         })
 
         const thisBar = (
-          <View
-          key={`bar${i}`}
-          style={[
-            styles.track,
-            {
-              width: itemWidth/1.5,
-              height: itemWidth/1.5,
-              borderRadius: itemWidth/1.5,
-              marginLeft: i === 0 ? 0 : BAR_SPACE,
-            },
-          ]}
+          <View key={`bar${i}`}
+            style={[
+              styles.track,
+              {
+                width: itemWidth/1.5,
+                height: itemWidth/1.5,
+                borderRadius: itemWidth/1.5,
+                marginLeft: i === 0 ? 0 : BAR_SPACE,
+              },
+            ]}
           >
             <TouchableOpacity onPress={this.onSliderDotTapped.bind(this, i)}>
-            <Animated.View
+              <Animated.View
 
-              style={[
-                styles.bar,
-                {
-                  width: itemWidth/1.5,
-                  height: itemWidth/1.5,
-                  borderRadius: itemWidth/1.5,
-                  transform: [
-                    { translateX: scrollBarVal },
-                  ],
-                },
-              ]}
-            />
+                style={[
+                  styles.bar,
+                  {
+                    width: itemWidth/1.5,
+                    height: itemWidth/1.5,
+                    borderRadius: itemWidth/1.5,
+                    transform: [
+                      { translateX: scrollBarVal },
+                    ],
+                  },
+                ]}
+              />
             </TouchableOpacity>
-
           </View>
         )
         barArray.push(thisBar)
       }) // end of foreach
 
       return (
-        <View
-        style={styles.container}
-        >
-
-          <ScrollView
-          ref="scrollView" horizontal
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={10}
-          pagingEnabled
-          onScroll={
-            Animated.event(
-              [{ nativeEvent: { contentOffset: { x: animVal } } }]
-            )
-          }
-          >
-
-              {imageArray}
-
-            </ScrollView>
-              <View
-              style={styles.barContainer}
-              >
-              {barArray}
-              </View>
-            </View>
+        <View style={styles.container}>
+          <ScrollView ref={(c) => { this.scrollView = c }} horizontal
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={
+              Animated.event(
+                [{ nativeEvent: { contentOffset: { x: animVal } } }]
+              )
+            }>
+            {imageArray}
+          </ScrollView>
+          <View style={styles.barContainer}>
+            {barArray}
+          </View>
+        </View>
       )
     }
   }
 }
 
+
+ImageSlider.propTypes = {
+  fetchUserFeedImages : PropTypes.func.isRequired,
+  userFeedImages      : PropTypes.array.isRequired,
+}
+
+
+
+/**
+* Define propTypes
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 5,
@@ -185,6 +188,11 @@ const styles = StyleSheet.create({
   },
 })
 
+
+
+/**
+* Necessary for Redux
+*/
 function mapStateToProps(state) {
   return ({
     userFeedImages: getUserFeedImagesState(state) || [],
@@ -200,4 +208,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageSlider);
+export default connect(mapStateToProps, mapDispatchToProps)(ImageSlider)

@@ -1,12 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableOpacity,
-  Linking,
 } from 'react-native'
 
 import {
@@ -49,7 +48,6 @@ export class Header extends React.Component {
   }
 
   onBioTextExpanded() {
-    const c = 1
   }
 
   render() {
@@ -57,8 +55,6 @@ export class Header extends React.Component {
     if(Object.keys(this.props.user).length > 0) {
 
       const user = this.props.user
-
-      let pbio = getParsedBio(user.bio, user.website)
 
       const bioJSX =
         (<Text style={styles.bio}>
@@ -86,7 +82,7 @@ export class Header extends React.Component {
             </View>
           </View>
         </View>
-        )
+      )
 
     } else {
 
@@ -101,6 +97,14 @@ export class Header extends React.Component {
     }
 
   }
+}
+
+/**
+ * Define propTypes
+ */
+Header.propTypes = {
+  fetchUser : PropTypes.func.isRequired,
+  user      : PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f8ff',
     borderBottomWidth: 1,
     borderColor: 'lightgray',
-},
+  },
   header: {
     flexDirection:   'row',
   },
@@ -164,6 +168,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
 
 

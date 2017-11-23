@@ -50,6 +50,18 @@ export class Header extends React.Component {
 
     if(Object.keys(this.props.user).length > 0) {
 
+      if(this.props.user.error) {
+        const errorMessage = 'There was an error fetching the user\'s information'
+        // show loading status
+        return (
+          <View style={[styles.headerBackground, styles.flexHeaderLoading]}>
+            <Text style={styles.headerError}>{errorMessage}</Text>
+          </View>
+        )
+      }
+
+
+      // show the user bio and profile picture
       const user = this.props.user
 
       const bioJSX =
@@ -121,7 +133,11 @@ const styles = StyleSheet.create({
     flex: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
-
+  },
+  headerError: {
+    backgroundColor: 'pink',
+    padding: 10,
+    color: '#800000',
   },
   header: {
     flexDirection:   'row',

@@ -65,6 +65,14 @@ export class ImagesGrid extends React.Component {
       )
     } else {
 
+      if(images[0].error) {
+        return (
+          <View style={[styles.imagesGridContainer, styles.errorContainer]}>
+            <Text style={styles.gridError}>There was an error loading popular images feed</Text>
+          </View>
+        )
+      }
+
       let imageArray = []
       images.forEach((image, i) => {
         const thisImage = (
@@ -105,6 +113,14 @@ const styles = StyleSheet.create({
     flex: 4,
     flexDirection : 'column',
     justifyContent: 'center',
+  },
+  errorContainer: {
+    flex: 1
+  },
+  gridError: {
+    backgroundColor: 'pink',
+    padding: 10,
+    color: '#800000'
   },
   loadingContainer: {
     alignItems: 'center',

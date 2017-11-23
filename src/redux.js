@@ -109,7 +109,7 @@ export const userDetails = (state = initialState, action = {}) => {
 
   case 'ERROR_FETCH_USER_FEED_IMAGES':
     new_state = JSON.parse(JSON.stringify(state))
-    new_state.userFeedImages = { error: true }
+    new_state.userFeedImages = [{ error: true }]
     return new_state
 
   case 'SUCCESS_FETCH_POPULAR_FEED_IMAGES':
@@ -119,7 +119,7 @@ export const userDetails = (state = initialState, action = {}) => {
 
   case 'ERROR_FETCH_POPULAR_FEED_IMAGES':
     new_state = JSON.parse(JSON.stringify(state))
-    new_state.popularFeedImages = { error: true }
+    new_state.popularFeedImages = [{ error: true }]
     return new_state
 
   default:

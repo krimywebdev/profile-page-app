@@ -70,6 +70,16 @@ export class ImageSlider extends Component {
         </View>
       )
     } else {
+      console.log(images)
+      if(images[0].error) {
+        const errorMessage = 'There was an error loading user\'s images feed'
+        // render error
+        return (
+          <View style={[styles.container, styles.errorContainer]}>
+            <Text style={styles.sliderError}>{errorMessage}</Text>
+          </View>
+        )
+      }
 
       const numItems = images.length
       const itemWidth = (FIXED_BAR_WIDTH / numItems) - ((numItems - 1) * BAR_SPACE)
@@ -161,12 +171,22 @@ ImageSlider.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 8,
+    flex: 5,
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20,
     borderBottomWidth: 1,
     borderColor: 'lightgray',
+  },
+
+  errorContainer: {
+    flex: 1
+  },
+
+  sliderError: {
+    backgroundColor: 'pink',
+    padding: 10,
+    color: '#800000'
   },
 
   barContainer: {

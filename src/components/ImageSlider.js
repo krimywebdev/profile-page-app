@@ -40,7 +40,7 @@ export class ImageSlider extends Component {
    */
   onSliderDotTapped(i) {
 
-    this.scrollView.scrollTo({x: i*deviceWidth, y: 0, animated: true})
+    this.scrollView.scrollTo({x : i*deviceWidth, y : 0, animated : true})
   }
 
   /**
@@ -62,7 +62,7 @@ export class ImageSlider extends Component {
     } else {
       images = []
     }
-
+    // show Loading message when fetching from the server
     if(images.length <= 0) {
       return (
         <View style={styles.container}>
@@ -70,10 +70,9 @@ export class ImageSlider extends Component {
         </View>
       )
     } else {
-      console.log(images)
+      // show error when fetching of images fails
       if(images[0].error) {
         const errorMessage = 'There was an error loading user\'s images feed'
-        // render error
         return (
           <View style={[styles.container, styles.errorContainer]}>
             <Text style={styles.sliderError}>{errorMessage}</Text>
@@ -81,6 +80,7 @@ export class ImageSlider extends Component {
         )
       }
 
+      // fetching of images successful, show the slider
       const numItems = images.length
       const itemWidth = (FIXED_BAR_WIDTH / numItems) - ((numItems - 1) * BAR_SPACE)
       const animVal = new Animated.Value(0)
@@ -88,6 +88,7 @@ export class ImageSlider extends Component {
 
       let imageArray = []
       let barArray = []
+      /** begin forEach **/
       images.forEach((image, i) => {
         const thisImage = (
           <Image key={`image${i}`}
@@ -99,20 +100,21 @@ export class ImageSlider extends Component {
         imageArray.push(thisImage)
 
         const scrollBarVal = animVal.interpolate({
-          inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-          outputRange: [-itemWidth, itemWidth],
-          extrapolate: 'clamp',
+          inputRange  : [deviceWidth * (i - 1), deviceWidth * (i + 1)],
+          outputRange : [-itemWidth, itemWidth],
+          extrapolate : 'clamp',
         })
 
+        // one dot per image
         const thisBar = (
           <View key={`bar${i}`}
             style={[
               styles.track,
               {
-                width: itemWidth/1.5,
-                height: itemWidth/1.5,
-                borderRadius: itemWidth/1.5,
-                marginLeft: i === 0 ? 0 : BAR_SPACE,
+                width        : itemWidth/1.5,
+                height       : itemWidth/1.5,
+                borderRadius : itemWidth/1.5,
+                marginLeft   : i === 0 ? 0 : BAR_SPACE,
               },
             ]}
           >
@@ -122,10 +124,10 @@ export class ImageSlider extends Component {
                 style={[
                   styles.bar,
                   {
-                    width: itemWidth/1.5,
-                    height: itemWidth/1.5,
-                    borderRadius: itemWidth/1.5,
-                    transform: [
+                    width        : itemWidth/1.5,
+                    height       : itemWidth/1.5,
+                    borderRadius : itemWidth/1.5,
+                    transform    : [
                       { translateX: scrollBarVal },
                     ],
                   },
@@ -135,7 +137,8 @@ export class ImageSlider extends Component {
           </View>
         )
         barArray.push(thisBar)
-      }) // end of foreach
+      })
+      /** end forEach **/
 
       return (
         <View style={styles.container}>
@@ -171,39 +174,39 @@ ImageSlider.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    borderColor: 'lightgray',
+    flex              : 5,
+    alignItems        : 'center',
+    justifyContent    : 'center',
+    paddingBottom     : 20,
+    borderBottomWidth : 1,
+    borderColor       : 'lightgray',
   },
 
   errorContainer: {
-    flex: 1
+    flex : 1
   },
 
   sliderError: {
-    backgroundColor: 'pink',
-    padding: 10,
-    color: '#800000'
+    backgroundColor : 'pink',
+    padding         : 10,
+    color           : '#800000'
   },
 
   barContainer: {
-    marginTop: 10,
-    flexDirection: 'row',
+    marginTop     : 10,
+    flexDirection : 'row',
   },
 
   track: {
-    backgroundColor: 'lightgray',
-    overflow: 'hidden',
-    height: 20,
+    backgroundColor : 'lightgray',
+    overflow        : 'hidden',
+    height          : 20,
 
   },
 
   bar: {
-    backgroundColor: 'slategray',
-    height: 20,
+    backgroundColor : 'slategray',
+    height          : 20,
   },
 })
 
@@ -214,8 +217,8 @@ const styles = StyleSheet.create({
  */
 function mapStateToProps(state) {
   return ({
-    userFeedImages: getUserFeedImagesState(state) || [],
-    selectedImageIndex: getSelectedImageIndexState(state) > 0 || 0,
+    userFeedImages     : getUserFeedImagesState(state) || [],
+    selectedImageIndex : getSelectedImageIndexState(state) > 0 || 0,
   })
 }
 

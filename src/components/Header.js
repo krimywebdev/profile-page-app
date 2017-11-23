@@ -46,13 +46,16 @@ export class Header extends React.Component {
     this.props.fetchUser()
   }
 
+  /**
+   * main render function
+   */
   render() {
 
     if(Object.keys(this.props.user).length > 0) {
 
+      // if there was a server error fetching info
       if(this.props.user.error) {
         const errorMessage = 'There was an error fetching the user\'s information'
-        // show loading status
         return (
           <View style={[styles.headerBackground, styles.flexHeaderLoading]}>
             <Text style={styles.headerError}>{errorMessage}</Text>
@@ -130,45 +133,50 @@ const styles = StyleSheet.create({
     borderColor       : 'lightgray',
   },
   flexHeaderLoading: {
-    flex: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex           : 1.5,
+    alignItems     : 'center',
+    justifyContent : 'center',
   },
   headerError: {
-    backgroundColor: 'pink',
-    padding: 10,
-    color: '#800000',
+    backgroundColor : 'pink',
+    padding         : 10,
+    color           : '#800000',
   },
   header: {
-    flexDirection:   'row',
+    flexDirection : 'row',
   },
   profilepicWrap: {
-    flex: 0.3,
-    alignItems: 'center',
-    marginBottom: 10,
+    flex         : 0.3,
+    alignItems   : 'center',
+    marginBottom : 10,
   },
   profilepic: {
-    borderRadius: 45,
-    borderColor: 'slategray',
-    borderWidth: 1,
-    height: 90,
-    width: 90,
+    borderRadius : 45,
+    borderColor  : 'slategray',
+    borderWidth  : 1,
+    height       : 90,
+    width        : 90,
   },
   bioWrap: {
-    flex: 0.7,
-    alignItems: 'flex-start',
-    paddingLeft: 5,
+    flex        : 0.7,
+    alignItems  : 'flex-start',
+    paddingLeft : 5,
   },
   bio: {
-    color: '#484848',
+    color : '#484848',
   },
   name: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize      : 16,
+    marginBottom  : 10,
   }
 
 })
 
+/**
+ * Necessary for Redux - Thunk
+ * @param state
+ * @returns {{user: (*|{})}}
+ */
 function mapStateToProps(state) {
   return ({
     user: getUserState(state) || {}

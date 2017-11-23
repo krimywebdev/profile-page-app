@@ -85,6 +85,7 @@ export class ImagesGrid extends React.Component {
         imageArray.push(thisImage)
       })
 
+      // main JSX
       return (
         <View style={[styles.imagesGridContainer, styles.loadingContainer]}>
           <ScrollView>
@@ -110,45 +111,51 @@ ImagesGrid.propTypes = {
 
 const styles = StyleSheet.create({
   imagesGridContainer: {
-    flex: 4,
-    flexDirection : 'column',
-    justifyContent: 'center',
+    flex           : 4,
+    flexDirection  : 'column',
+    justifyContent : 'center',
   },
   errorContainer: {
-    flex: 1
+    flex : 1
   },
   gridError: {
-    backgroundColor: 'pink',
-    padding: 10,
-    color: '#800000'
+    backgroundColor : 'pink',
+    padding         : 10,
+    color           : '#800000'
   },
   loadingContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems     : 'center',
+    justifyContent : 'center',
   },
   imagesGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection : 'row',
+    flexWrap      : 'wrap',
   },
   photoWrap: {
-    margin: 2,
-    height: 120,
-    width: (Dimensions.get('window').width / 3) - 6,
+    margin : 2,
+    height : 120,
+    width  : (Dimensions.get('window').width / 3) - 6,
   },
   photo: {
-    flex: 1,
-    width: null,
-    alignSelf: 'stretch',
+    flex      : 1,
+    width     : null,
+    alignSelf : 'stretch',
   }
 
 })
+
+
+/**
+ * Necessary for Redux-Thunk
+ * @param state
+ * @returns {{popularFeedImages: (*|Array)}}
+ */
 
 function mapStateToProps(state) {
   return ({
     popularFeedImages: getPopularFeedImagesState(state) || [],
   })
 }
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -157,6 +164,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImagesGrid)

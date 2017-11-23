@@ -1,14 +1,19 @@
 import { createSelector } from 'reselect'
 
-// selector
+/**
+ * selector for Header component
+ */
 const getUser = (state) => state.userDetails.user
 
-// reselect function
 export const getUserState = createSelector(
   [ getUser ],
   (user) => user
 )
 
+
+/**
+ * selector for ImageSlider component
+ */
 const getUserFeedPhotos = (state) => state.userDetails.userFeedImages
 
 export const getUserFeedImagesState = createSelector(
@@ -23,6 +28,10 @@ export const getSelectedImageIndexState = createSelector(
   (selectedImageIndex) => selectedImageIndex
 )
 
+
+/**
+ * selector for ImagesGrid component
+ */
 const getPopularFeedImages = (state) => state.userDetails.popularFeedImages
 
 export const getPopularFeedImagesState = createSelector(

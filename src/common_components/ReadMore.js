@@ -8,19 +8,19 @@ class ReadMore extends React.Component {
     this.resetData()
 
     this.state = {
-      numberOfLines: null,
-      opacity: 0,
+      numberOfLines : null,
+      opacity       : 0,
     }
 
-    this.onLayout = this.onLayout.bind(this)
-    this.onPressMore = this.onPressMore.bind(this)
-    this.onPressLess = this.onPressLess.bind(this)
-    this.setOriginalHeight = this.setOriginalHeight.bind(this)
-    this.resetData = this.resetData.bind(this)
+    this.onLayout           = this.onLayout.bind(this)
+    this.onPressMore        = this.onPressMore.bind(this)
+    this.onPressLess        = this.onPressLess.bind(this)
+    this.setOriginalHeight  = this.setOriginalHeight.bind(this)
+    this.resetData          = this.resetData.bind(this)
     this.checkTextTruncated = this.checkTextTruncated.bind(this)
-    this.renderReadMore = this.renderReadMore.bind(this)
-    this.renderReadLess = this.renderReadLess.bind(this)
-    this.renderFooter = this.renderFooter.bind(this)
+    this.renderReadMore     = this.renderReadMore.bind(this)
+    this.renderReadLess     = this.renderReadLess.bind(this)
+    this.renderFooter       = this.renderFooter.bind(this)
 
   }
 
@@ -28,8 +28,8 @@ class ReadMore extends React.Component {
     this.resetData()
 
     this.setState({
-      numberOfLines: null,
-      opacity: 0,
+      numberOfLines : null,
+      opacity       : 0,
     })
   }
 
@@ -89,6 +89,9 @@ class ReadMore extends React.Component {
     this.isInit = false
   }
 
+  /**
+   * determine whether text is clipped or not
+   */
   checkTextTruncated(height){
     if (height < this.originalHeight) {
       this.shouldShowMore = true
@@ -111,26 +114,33 @@ class ReadMore extends React.Component {
 
     return (
       <Text style={[styles.readText, styles.readLess]} onPress={this.onPressLess}>
-      ..read less
+      ...read less
       </Text>
     )
 
   }
 
+  /**
+   * Renders "...read more or ...read less" appropriately
+   */
   renderFooter() {
     const {
       numberOfLines,
     } = this.state
 
+    // decide whether to show "read more" or "read less"
     if (this.shouldShowMore === true) {
       if (numberOfLines > 0) {
-        return (this.props.renderReadMore || this.renderReadMore)(this.onPressMore)
+        return (this.renderReadMore)(this.onPressMore)
       }
-      return (this.props.renderReadLess || this.renderReadLess)(this.onPressLess)
+      return (this.renderReadLess)(this.onPressLess)
     }
     return null
   }
 
+  /**
+   * main render function
+   */
   render() {
     /* eslint-disable react/prop-types */
     return (
@@ -139,8 +149,6 @@ class ReadMore extends React.Component {
           {this.props.children}
         </Text>
         {this.renderFooter()}
-
-
       </View>
     )
     /* eslint-enable react/prop-types */
@@ -163,10 +171,10 @@ ReadMore.defaultProps = {
 
 const styles = StyleSheet.create({
   readMoreWrapper: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#f0f8ff'
+    position        : 'absolute',
+    right           : 0,
+    bottom          : 0,
+    backgroundColor : '#f0f8ff'
   },
 
   readMore: {
@@ -174,12 +182,12 @@ const styles = StyleSheet.create({
   },
 
   readLess: {
-    marginBottom: 10
+    marginBottom : 10
   },
 
   readText: {
-    color: '#b4b4b4',
-    fontSize: 12,
+    color    : '#b4b4b4',
+    fontSize : 12,
   }
 
 })

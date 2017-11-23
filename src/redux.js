@@ -11,10 +11,6 @@ import PumpupService from './api_services/services'
 /**
  * can be split into another file called actions.js
  */
-
-
-
-
 export const showUser = user => ({
   type: 'SUCCESS_FETCH_USER',
   user,
@@ -77,7 +73,6 @@ export const fetchPopularFeedImages = () => {
 /**
  * can be split into another file called reducers.js
  */
-
 const initialState = {
   userDetails: {
     user: {},
@@ -133,11 +128,11 @@ export const reducers = combineReducers({
 
 
 
-
 /**
  * can be split into a separate file called store.js
  */
 export function configureStore(initialState = {}) {
+  // necessary for thunk
   const store = createStore(
     reducers,
     initialState,

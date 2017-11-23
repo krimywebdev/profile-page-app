@@ -161,7 +161,7 @@ ImageSlider.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
+    flex: 8,
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20,

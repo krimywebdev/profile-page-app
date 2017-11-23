@@ -30,7 +30,6 @@ export class Header extends React.Component {
   constructor(props) {
     super(props)
     this.loadUserData = this.loadUserData.bind(this)
-    this.onBioTextExpanded = this.onBioTextExpanded(this)
   }
 
   /**
@@ -45,9 +44,6 @@ export class Header extends React.Component {
    */
   loadUserData() {
     this.props.fetchUser()
-  }
-
-  onBioTextExpanded() {
   }
 
   render() {
@@ -74,8 +70,7 @@ export class Header extends React.Component {
             </View>
             <View style={styles.bioWrap}>
               <Text style={styles.name}>{user.name}</Text>
-              <ReadMore numberOfLines={3} afterExpand={this.onBioTextExpanded}>
-
+              <ReadMore numberOfLines={3}>
                 {bioJSX}
               </ReadMore>
 
@@ -88,7 +83,7 @@ export class Header extends React.Component {
 
       // show loading status
       return (
-        <View style={styles.headerBackground}>
+        <View style={[styles.headerBackground, styles.flexHeaderLoading]}>
           <Text>Loading ...
           </Text>
         </View>
@@ -109,19 +104,24 @@ Header.propTypes = {
 
 const styles = StyleSheet.create({
   headerBackground: {
-    flex:           1.5,
-    paddingTop    : 20,
-    marginTop     : 20,
-    paddingLeft   : 10,
-    paddingRight  : 10,
-    marginBottom : 10,
-    width         : null,
-    alignSelf     : 'stretch',
-    flexDirection : 'column',
-    justifyContent: 'flex-start',
-    backgroundColor: '#f0f8ff',
-    borderBottomWidth: 1,
-    borderColor: 'lightgray',
+    paddingTop        : 20,
+    marginTop         : 20,
+    paddingLeft       : 10,
+    paddingRight      : 10,
+    marginBottom      : 10,
+    width             : null,
+    alignSelf         : 'stretch',
+    flexDirection     : 'column',
+    justifyContent    : 'flex-start',
+    backgroundColor   : '#f0f8ff',
+    borderBottomWidth : 1,
+    borderColor       : 'lightgray',
+  },
+  flexHeaderLoading: {
+    flex: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
   header: {
     flexDirection:   'row',
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   profilepicWrap: {
     flex: 0.3,
     alignItems: 'center',
+    marginBottom: 10,
   },
   profilepic: {
     borderRadius: 45,
@@ -144,7 +145,6 @@ const styles = StyleSheet.create({
   },
   bio: {
     color: '#484848',
-    zIndex: 1,
   },
   name: {
     fontSize: 16,

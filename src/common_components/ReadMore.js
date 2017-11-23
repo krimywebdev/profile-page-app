@@ -110,7 +110,7 @@ class ReadMore extends React.Component {
   renderReadLess(){
 
     return (
-      <Text style={styles.readText} onPress={this.onPressLess}>
+      <Text style={[styles.readText, styles.readLess]} onPress={this.onPressLess}>
       ..read less
       </Text>
     )
@@ -169,9 +169,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f8ff'
   },
 
-
   readMore: {
 
+  },
+
+  readLess: {
+    marginBottom: 10
   },
 
   readText: {

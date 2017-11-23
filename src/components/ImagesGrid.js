@@ -78,7 +78,7 @@ export class ImagesGrid extends React.Component {
       })
 
       return (
-        <View style={styles.imagesGridContainer}>
+        <View style={[styles.imagesGridContainer, styles.loadingContainer]}>
           <ScrollView>
             <View style={styles.imagesGrid}>
               {imageArray}
@@ -104,7 +104,10 @@ const styles = StyleSheet.create({
   imagesGridContainer: {
     flex: 4,
     flexDirection : 'column',
-    alignSelf     : 'stretch',
+    justifyContent: 'center',
+  },
+  loadingContainer: {
+    alignItems: 'center',
     justifyContent: 'center',
   },
   imagesGrid: {
